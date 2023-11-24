@@ -1,4 +1,4 @@
---Lazy.nvimのセットアップ
+--azy.nvimのセットアップ
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -25,14 +25,16 @@ require('lazy').setup({
   {
     "HiPhish/Rainbow-delimiters.nvim"
   },
-  { 'kevinhwang91/nvim-hlslens' },
+--  { 'kevinhwang91/nvim-hlslens' },
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
     opts = {}
   },
   {
-    "nvim-treesitter/nvim-treesitter", build = ":TSUpdate"
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    lazy = true,
   },
   {
     "nvim-lualine/lualine.nvim",
@@ -48,7 +50,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
     lazy = true,
-    key = { { '<leader>ff', mode = 'n' } }
+    keys = { { '<leader>ff', mode = 'n' } }
   },
   {
     'nvim-tree/nvim-tree.lua',
@@ -60,18 +62,19 @@ require('lazy').setup({
       "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons",
     },
     lazy = true,
-    key = { { '<leader>ff', mode = 'n' } }
   },
   {
     'nvim-tree/nvim-tree.lua',
     dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' }
   },
-  { 'neovim/nvim-lspconfig' },
+  {
+    'neovim/nvim-lspconfig',
+    VeryLazy = true,
+  },
   {
     'williamboman/mason.nvim',
-    config = function() require 'plugins.mason' end,
     dependencies = {
-      'williamboman/mason.nvim', 'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp',
+      'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp',
     },
     lazy = true,
     cmd = {
@@ -85,11 +88,14 @@ require('lazy').setup({
   },
   {
     'SmiteshP/nvim-navic',
+    lazy = true,
+    cmd = "InsertEnter",
     config = function() require 'plugins.nvim-navic' end,
     dependencies = 'neovim/nvim-lspconfig',
   },
   {
     "SmiteshP/nvim-navbuddy",
+    keys = {"<leader>nb", mode = "n"},
     config = function() require 'plugins.nvim-navbuddy' end,
     dependencies = {
       'neovim/nvim-lspconfig', 'SmiteshP/nvim-navic', 'MunifTanjim/nui.nvim',
@@ -114,34 +120,42 @@ require('lazy').setup({
         'zbirenbaum/copilot-cmp',
         dependencies = { 'copilot.lua' },
         config = function() require('copilot_cmp').setup() end,
+        lazy = true,
       }
 
     },
   },
   {
     "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
+    lazy = true,
     event = "InsertEnter",
     config = function()
-      require("copilot").setup({})
+      require("copilot").setup({
+        copilot_node_command = 'node'
+      })
     end,
   },
+  {
+    'folke/trouble.nvim',
+    lazy = true,
+    keys = {"<leader>xx", "<leader>xw", "<leader>xd", "<leader>xq", "<leader>xl", mode = "n"},
+    config = function() require 'plugins.trouble' end,
+    independencies = 'nvim-tree/nvim-web-devicons',
+  }
 
 })
-
-
-require("plugins/kanagawa")
+copilot_node_command = vim.fn.expand("$HOME") .. "/usr/local/bin/node",require("plugins/kanagawa")
 require("plugins/indent-blankline")
 require("plugins/lualine")
 require("plugins/nvim-treesitter")
 require("plugins/lps")
 require("plugins/telescope")
-require('plugins/hlslens')
+--require('plugins/hlslens')
 require('plugins/nvim-tree')
 require('plugins/telescope-file-browser')
 require('plugins/mason')
 require('plugins/nvim-lspconfig')
-
+require('plugins/mason')
 -- その他の設定
 vim.wo.number = true
 vim.cmd("syntax enable")
@@ -161,8 +175,7 @@ vim.o.showmatch = true
 vim.o.matchtime = 1
 vim.bo.softtabstop = 2
 vim.opt.laststatus = 3
---vim.cmd("hi Pmenu guibg=#458588 guifg=#928374")
---vim.cmd("hi PmenuSel guibg=#83a598 guifg=#ebdbb2")
+vim.o.helplang = 'ja,en'
 vim.api.nvim_win_set_option(0, 'signcolumn', 'yes:1')
 vim.api.nvim_set_option('clipboard', 'unnamedplus')
 vim.api.nvim_win_set_option(0, 'wrap', false)
