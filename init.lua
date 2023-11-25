@@ -1,4 +1,4 @@
---azy.nvimのセットアップ
+--lazy.nvimのセットアップ
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -119,10 +119,23 @@ require('lazy').setup({
     config = function() require 'plugins.nvim-navbuddy' end,
     dependencies = {
       'neovim/nvim-lspconfig', 'SmiteshP/nvim-navic', 'MunifTanjim/nui.nvim',
-      'numToStr/Comment.nvim', 'nvim-telescope/telescope.nvim',
+      {
+        'numToStr/Comment.nvim',
+        config = function()
+          require 'plugins.comment'
+        end
+      },
+      'nvim-telescope/telescope.nvim',
     },
   },
   { 'williamboman/mason-lspconfig.nvim' },
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      require 'plugins.comment'
+    end,
+    cmd = 'InsertEnter',
+  },
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
@@ -171,7 +184,7 @@ require("plugins/lualine")
 require("plugins/nvim-treesitter")
 require("plugins/lps")
 require("plugins/telescope")
---require('plugins/hlslens')
+require('plugins/hlslens')
 require('plugins/nvim-tree')
 require('plugins/telescope-file-browser')
 require('plugins/mason')
@@ -213,10 +226,7 @@ vim.api.nvim_set_var('loaded_netrw', 1)
 vim.api.nvim_set_var('loaded_netrwPlugin', 1)
 -- キーマッピング
 vim.api.nvim_set_keymap("i", "jk", "<Esc>", { noremap = true, silent = true })
-vim.g.mapleader = " "
-vim.api.nvim_set_keymap("n", "<F5>", ":!python3 %<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("t", "jk", "<C-\\><C-N>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("x", "jk", "<Esc>", { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap("i", "<Tab>", 'pumvisible() ? "<C-n>" : "<Tab>"', { noremap = true, expr = true })
 vim.api.nvim_set_keymap("i", "<S-Tab>", 'pumvisible() ? "<C-p>" : "<S-Tab>"', { noremap = true, expr = true })
