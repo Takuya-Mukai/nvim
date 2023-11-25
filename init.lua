@@ -35,7 +35,8 @@ require('lazy').setup({
     'petertriho/nvim-scrollbar',
     config = function ()
       require 'plugins.nvim-scrollbar'
-    end
+    end,
+    VeryLazy = true,
   },
   {
     'lewis6991/gitsigns.nvim',
@@ -47,7 +48,8 @@ require('lazy').setup({
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
-    opts = {}
+    opts = {},
+    VeryLazy = true,
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -129,7 +131,7 @@ require('lazy').setup({
       "hrsh7th/cmp-nvim-lsp",
       {
         'L3MON4D3/LuaSnip',
-        tag = "v1.*",
+        vesion = 'v2.*',
         run = 'make install_jsregexp',
         config = function() require 'plugins.luasnip' end,
         dependencies = { 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets' }
@@ -139,8 +141,9 @@ require('lazy').setup({
         dependencies = { 'copilot.lua' },
         config = function() require('copilot_cmp').setup() end,
         lazy = true,
-      }
-
+      },
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
     },
   },
   {
