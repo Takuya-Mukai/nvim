@@ -25,7 +25,25 @@ require('lazy').setup({
   {
     "HiPhish/Rainbow-delimiters.nvim"
   },
---  { 'kevinhwang91/nvim-hlslens' },
+  {
+    'kevinhwang91/nvim-hlslens',
+    config = function()
+      require 'plugins/nvim-hlslens'
+    end,
+  },
+  {
+    'petertriho/nvim-scrollbar',
+    config = function ()
+      require 'plugins.nvim-scrollbar'
+    end
+  },
+  {
+    'lewis6991/gitsigns.nvim',
+    --tag = 'release',
+    config = function ()
+      require 'plugins.gitsigns'
+    end,
+  },
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
