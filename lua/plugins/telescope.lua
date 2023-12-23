@@ -8,6 +8,20 @@ require('telescope').setup {
     },
     winblend = 20,
   },
+  extensions = {
+    frecency = {
+      show_scores = false,
+      show_unindexed = true,
+      ignore_patterns = { "*.git/*", "*/tmp/*" },
+      disable_devicons = false,
+      workspaces = {
+        ["conf"]    = "/home/takuyamuk/.config",
+        ["data"]    = "/home/takuyamuk/.local/share",
+        ["project"] = "/home/takuyamuk/projects",
+        ["wiki"]    = "/home/takuyamuk/wiki"
+      }
+    }
+  },
 }
 require('telescope').load_extension('fzf')
 local themes = require 'telescope.themes'
