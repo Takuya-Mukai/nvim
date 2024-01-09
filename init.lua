@@ -33,6 +33,7 @@ require('lazy').setup({
   },
   {
     'kevinhwang91/nvim-hlslens',
+    keys = {"/", mod = "n"},
     config = function()
       require 'plugins/nvim-hlslens'
     end,
@@ -76,7 +77,7 @@ require('lazy').setup({
     dependencies = {
       'nvim-tree/nvim-web-devicons', lazy = true
     },
-    event = "BufEnter",
+    event = "BufWinEnter",
   },
   {
     'nvim-telescope/telescope.nvim',
@@ -91,6 +92,7 @@ require('lazy').setup({
   },
   {
   "nvim-telescope/telescope-frecency.nvim",
+  keys = {'<leader><leader>', mode = 'n'},
   config = function()
     require("telescope").load_extension "frecency"
   end,
@@ -210,11 +212,13 @@ require('lazy').setup({
   {
     'rcarriga/nvim-dap-ui',
     config = function() require 'plugins.dapui' end,
-    keys = {'<leader>d', mode = 'n'},
+    event = "BufEnter",
+    -- keys = {'<leader>d', '<F5>', mode = 'n'},
     dependencies = {{
         "folke/neodev.nvim", opts = {}, 
         config = function() require 'plugins/neodev' end,
       }, 
+      "nvim-dap",
     },
   },
   {
@@ -278,7 +282,7 @@ vim.api.nvim_set_keymap("t", "jk", "<C-\\><C-N>", { noremap = true, silent = tru
 
 vim.api.nvim_set_keymap("i", "<Tab>", 'pumvisible() ? "<C-n>" : "<Tab>"', { noremap = true, expr = true })
 vim.api.nvim_set_keymap("i", "<S-Tab>", 'pumvisible() ? "<C-p>" : "<S-Tab>"', { noremap = true, expr = true })
-vim.api.nvim_set_keymap("n", ":vim", ":e ~/.config/nvim/init.lua >", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>vim", ":e ~/.config/nvim/init.lua<CR>", { noremap = true, silent = true })
 -- コマンドモードで "Vim" と入力すると、init.lua を開く
 -- Don't auto-insert line break when selecting completion
 vim.cmd("autocmd TermOpen * setlocal nonumber")
