@@ -1,4 +1,6 @@
---azy.nvimのセットアップ
+--lazy.nvimのセットアップ
+vim.loader.enable()
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -11,6 +13,8 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+
+
 require('lazy').setup({
   {
     'vim-jp/vimdoc-ja',
@@ -20,27 +24,60 @@ require('lazy').setup({
     },
   },
   {
-    "rebelot/kanagawa.nvim"
+    "rebelot/kanagawa.nvim",
+    -- event = "BufEnter",
   },
   {
-    "HiPhish/Rainbow-delimiters.nvim"
+    "HiPhish/Rainbow-delimiters.nvim",
+    dependencies = 'nvim-treesitter/nvim-treesitter',
   },
---  { 'kevinhwang91/nvim-hlslens' },
+  {
+    'kevinhwang91/nvim-hlslens',
+    keys = {"/", mod = "n"},
+    config = function()
+      require 'plugins/nvim-hlslens'
+    end,
+  },
+  {
+    'petertriho/nvim-scrollbar',
+    config = function ()
+      require 'plugins.nvim-scrollbar'
+    end,
+    event = "BufEnter",
+  },
+  {
+    'lewis6991/gitsigns.nvim',
+    --tag = 'release',
+    config = function ()
+      require 'plugins.gitsigns'
+    end,
+    event = "BufEnter",
+  },
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
-    opts = {}
+    opts = {},
+    config = function ()
+      require 'plugins/indent-blankline'
+    end,
+    dependencies = 'nvim-treesitter/nvim-treesitter',
+    event = "BufWinEnter",
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    config = function() require 'plugins.nvim-treesitter' end,
+    event = "BufWinEnter",
     build = ":TSUpdate",
-    lazy = true,
   },
   {
     "nvim-lualine/lualine.nvim",
+    config = function ()
+      require 'plugins.lualine'
+    end,
     dependencies = {
       'nvim-tree/nvim-web-devicons', lazy = true
     },
+    event = "BufWinEnter",
   },
   {
     'nvim-telescope/telescope.nvim',
@@ -50,11 +87,25 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
     lazy = true,
-    keys = { { '<leader>ff', mode = 'n' } }
+    keys = {'<leader>ff', mode = 'n'},
+    config = function() require 'plugins.telescope' end,
+  },
+  {
+  "nvim-telescope/telescope-frecency.nvim",
+  keys = {'<leader><leader>', mode = 'n'},
+  config = function()
+    require("telescope").load_extension "frecency"
+  end,
+--  config = function()
+--    require = "plugins/telescope-frecency"
+--  end,
+  dependencies = "nvim-telescope/telescope.nvim",
   },
   {
     'nvim-tree/nvim-tree.lua',
-    dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' }
+    config = function() require 'plugins.nvim-tree' end,
+    dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
+    keys = { { '<leader>ex', mode = 'n' } },
   },
   {
     "nvim-telescope/telescope-file-browser.nvim",
@@ -62,14 +113,18 @@ require('lazy').setup({
       "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons",
     },
     lazy = true,
+    key = { "<space>fb", mode = "n" },
+    config = function() require 'plugins.telescope-file-browser' end,
   },
   {
     'nvim-tree/nvim-tree.lua',
-    dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' }
+    dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
+    keys = { { '<leader>ex', mode = 'n' } },
   },
   {
     'neovim/nvim-lspconfig',
-    VeryLazy = true,
+    event = "BufEnter",
+    config = function() require 'plugins.nvim-lspconfig' end,
   },
   {
     'williamboman/mason.nvim',
@@ -85,6 +140,7 @@ require('lazy').setup({
       "MasonLog",
       "MasonUpdate",
     },
+    config = function() require 'plugins.mason' end,
   },
   {
     'SmiteshP/nvim-navic',
@@ -98,11 +154,18 @@ require('lazy').setup({
     keys = {"<leader>nb", mode = "n"},
     config = function() require 'plugins.nvim-navbuddy' end,
     dependencies = {
-      'neovim/nvim-lspconfig', 'SmiteshP/nvim-navic', 'MunifTanjim/nui.nvim',
-      'numToStr/Comment.nvim', 'nvim-telescope/telescope.nvim',
+      'neovim/nvim-lspconfig', 'SmiteshP/nvim-navic', 'MunifTanjim/nui.nvim', 'numToStr/Comment.nvim',
+      'nvim-telescope/telescope.nvim',
     },
   },
   { 'williamboman/mason-lspconfig.nvim' },
+  {
+    'numToStr/Comment.nvim',
+    event = "BufWinEnter",
+    config = function()
+      require 'plugins.comment'
+    end,
+  },
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
@@ -111,7 +174,7 @@ require('lazy').setup({
       "hrsh7th/cmp-nvim-lsp",
       {
         'L3MON4D3/LuaSnip',
-        tag = "v1.*",
+        vesion = 'v2.*',
         run = 'make install_jsregexp',
         config = function() require 'plugins.luasnip' end,
         dependencies = { 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets' }
@@ -121,8 +184,9 @@ require('lazy').setup({
         dependencies = { 'copilot.lua' },
         config = function() require('copilot_cmp').setup() end,
         lazy = true,
-      }
-
+      },
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
     },
   },
   {
@@ -141,21 +205,43 @@ require('lazy').setup({
     keys = {"<leader>xx", "<leader>xw", "<leader>xd", "<leader>xq", "<leader>xl", mode = "n"},
     config = function() require 'plugins.trouble' end,
     independencies = 'nvim-tree/nvim-web-devicons',
-  }
-
+  },
+  {
+    'mfussenegger/nvim-dap', config = function() require 'plugins.nvim-dap' end,
+  },
+  {
+    'rcarriga/nvim-dap-ui',
+    config = function() require 'plugins.dapui' end,
+    event = "BufEnter",
+    -- keys = {'<leader>d', '<F5>', mode = 'n'},
+    dependencies = {{
+        "folke/neodev.nvim", opts = {}, 
+        config = function() require 'plugins/neodev' end,
+      }, 
+      "nvim-dap",
+    },
+  },
+  {
+    'https://github.com/mfussenegger/nvim-dap-python',
+    config = function() require 'plugins/dap-python' end,
+    ft = 'python',
+    dependencies = 'mfussenegger/nvim-dap',
+  },
+  {
+    'folke/which-key.nvim',
+    lazy = true,
+    cmd = {
+      "WhichKey",
+    },
+    opts = {},
+  },
 })
 copilot_node_command = vim.fn.expand("$HOME") .. "/usr/local/bin/node",require("plugins/kanagawa")
-require("plugins/indent-blankline")
-require("plugins/lualine")
-require("plugins/nvim-treesitter")
-require("plugins/lps")
-require("plugins/telescope")
---require('plugins/hlslens')
-require('plugins/nvim-tree')
-require('plugins/telescope-file-browser')
-require('plugins/mason')
-require('plugins/nvim-lspconfig')
-require('plugins/mason')
+
+
+
+
+
 -- その他の設定
 vim.wo.number = true
 vim.cmd("syntax enable")
@@ -192,19 +278,12 @@ vim.api.nvim_set_var('loaded_netrw', 1)
 vim.api.nvim_set_var('loaded_netrwPlugin', 1)
 -- キーマッピング
 vim.api.nvim_set_keymap("i", "jk", "<Esc>", { noremap = true, silent = true })
-vim.g.mapleader = " "
-vim.api.nvim_set_keymap("n", "<F5>", ":!python3 %<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("t", "jk", "<C-\\><C-N>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("x", "jk", "<Esc>", { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap("i", "<Tab>", 'pumvisible() ? "<C-n>" : "<Tab>"', { noremap = true, expr = true })
 vim.api.nvim_set_keymap("i", "<S-Tab>", 'pumvisible() ? "<C-p>" : "<S-Tab>"', { noremap = true, expr = true })
-vim.api.nvim_set_keymap("n", ":vim", ":e ~/.config/nvim/init.lua >", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>vim", ":e ~/.config/nvim/init.lua<CR>", { noremap = true, silent = true })
 -- コマンドモードで "Vim" と入力すると、init.lua を開く
 -- Don't auto-insert line break when selecting completion
 vim.cmd("autocmd TermOpen * setlocal nonumber")
 vim.cmd("autocmd TermOpen * setlocal norelativenumber")
-
-
-vim.api.nvim_set_keymap("n", "<C-j>", ":bprev<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-k>", ":bnext<CR>", { noremap = true, silent = true })

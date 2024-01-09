@@ -8,6 +8,20 @@ require('telescope').setup {
     },
     winblend = 20,
   },
+  extensions = {
+    frecency = {
+      show_scores = false,
+      show_unindexed = true,
+      ignore_patterns = { "*.git/*", "*/tmp/*" },
+      disable_devicons = false,
+      workspaces = {
+        ["conf"]    = "/home/takuyamuk/.config",
+        ["data"]    = "/home/takuyamuk/.local/share",
+        ["project"] = "/home/takuyamuk/projects",
+        ["wiki"]    = "/home/takuyamuk/wiki"
+      }
+    }
+  },
 }
 require('telescope').load_extension('fzf')
 local themes = require 'telescope.themes'
@@ -18,6 +32,8 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep)
 vim.keymap.set('n', '<leader>fb', builtin.buffers)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags)
 vim.keymap.set('n', '<C-l>', builtin.diagnostics)
+vim.keymap.set("n", "<leader><leader>f", "<Cmd>Telescope frecency<CR>")
+vim.keymap.set("n", "<leader><leader>", "<Cmd>Telescope frecency workspace=CWD<CR>")
 vim.keymap.set('n', '<leader>h', function()
   builtin.help_tags(themes.get_ivy())
 end)
