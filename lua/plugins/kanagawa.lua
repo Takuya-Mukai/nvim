@@ -2,9 +2,9 @@
 -- Get the colors for the current theme
 require('kanagawa').setup({
   compile = true,
-  theme = "dragon",
+  theme = "wave",
   background = {
-  dark = "dragon"
+  dark = "wave"
   },
   overrides = function(colors)
     local theme = colors.theme

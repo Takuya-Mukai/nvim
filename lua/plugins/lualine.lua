@@ -26,7 +26,7 @@ require('lualine').setup{
     lualine_a = {'buffers'},
     lualine_c = {},
     lualine_z = {
-        { 'tabs', tabs_color = switch_color },
+        { 'tabs'},
     },
   },
 }

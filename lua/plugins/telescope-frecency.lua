@@ -1,7 +1,8 @@
+local telescope = require("telescope")
 telescope.setup {
   extensions = {
     frecency = {
-      db_root = "/home/takuyamuk/path/to/db_root",
+      -- db_root = "/home/takuyamuk/path/to/db_root",
       show_scores = false,
       show_unindexed = true,
       ignore_patterns = { "*.git/*", "*/tmp/*" },

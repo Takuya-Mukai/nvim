@@ -10,6 +10,7 @@ if not vim.loop.fs_stat(lazypath) then
     "https://github.com/folke/lazy.nvim.git",
     "--branch=stable", -- 最新の安定リリース
     lazypath,
+
   })
 end
 vim.opt.rtp:prepend(lazypath)
@@ -25,19 +26,22 @@ require('lazy').setup({
   },
   {
     "rebelot/kanagawa.nvim",
+    config = function()
+      require 'plugins/kanagawa'
+    end,
     -- event = "BufEnter",
   },
   {
     "HiPhish/Rainbow-delimiters.nvim",
     dependencies = 'nvim-treesitter/nvim-treesitter',
   },
-  {
-    'kevinhwang91/nvim-hlslens',
-    keys = {"/", mod = "n"},
-    config = function()
-      require 'plugins/nvim-hlslens'
-    end,
-  },
+  -- {
+  --   'kevinhwang91/nvim-hlslens',
+  --   keys = {"/", mod = "n"},
+  --   config = function()
+  --     require 'plugins/nvim-hlslens'
+  --   end,
+  -- },
   {
     'petertriho/nvim-scrollbar',
     config = function ()
@@ -91,15 +95,12 @@ require('lazy').setup({
     config = function() require 'plugins.telescope' end,
   },
   {
-  "nvim-telescope/telescope-frecency.nvim",
-  keys = {'<leader><leader>', mode = 'n'},
-  config = function()
-    require("telescope").load_extension "frecency"
-  end,
---  config = function()
---    require = "plugins/telescope-frecency"
---  end,
-  dependencies = "nvim-telescope/telescope.nvim",
+    "nvim-telescope/telescope-frecency.nvim",
+    keys = {'<leader><leader>', mode = 'n'},
+    config = function()
+      require = "plugins/telescope-frecency"
+    end,
+    dependencies = "nvim-telescope/telescope.nvim",
   },
   {
     'nvim-tree/nvim-tree.lua',
@@ -123,7 +124,7 @@ require('lazy').setup({
   },
   {
     'neovim/nvim-lspconfig',
-    event = "BufEnter",
+    -- event = "BufEnter",
     config = function() require 'plugins.nvim-lspconfig' end,
   },
   {
@@ -131,15 +132,15 @@ require('lazy').setup({
     dependencies = {
       'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp',
     },
-    lazy = true,
-    cmd = {
-      "Mason",
-      "MasonInstall",
-      "MasonUninstall",
-      "MasonUninstallAll",
-      "MasonLog",
-      "MasonUpdate",
-    },
+    -- lazy = true,
+    -- cmd = {
+    --   "Mason",
+    --   "MasonInstall",
+    --   "MasonUninstall",
+    --   "MasonUninstallAll",
+    --   "MasonLog",
+    --   "MasonUpdate",
+    -- },
     config = function() require 'plugins.mason' end,
   },
   {
@@ -168,7 +169,7 @@ require('lazy').setup({
   },
   {
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    -- event = "InsertEnter",
     config = function() require 'plugins.nvim-cmp' end,
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
@@ -235,14 +236,36 @@ require('lazy').setup({
     },
     opts = {},
   },
+  {
+    'j-hui/fidget.nvim',
+    config = function() require 'plugins.fidget' end,
+  },
+  {
+    'rcarriga/nvim-notify',
+    ops = {},
+    config = function() require 'plugins.nvim-notify' end,
+  },
+  {
+    'nvimtools/none-ls.nvim',
+    dependencies = 'nvim-lua/plenary.nvim',
+    config = true,
+  },
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "jose-elias-alvarez/none-ls.nvim",
+    },
+    opts = {
+      handlers = {}
+    },
+  },
 })
-copilot_node_command = vim.fn.expand("$HOME") .. "/usr/local/bin/node",require("plugins/kanagawa")
-
-
-
 
 
 -- その他の設定
+vim.api.nvim_set_option_value('termguicolors', true, {scope = 'global'})
 vim.wo.number = true
 vim.cmd("syntax enable")
 vim.bo.tabstop = 2
@@ -262,18 +285,18 @@ vim.o.matchtime = 1
 vim.bo.softtabstop = 2
 vim.opt.laststatus = 3
 vim.o.helplang = 'ja,en'
-vim.api.nvim_win_set_option(0, 'signcolumn', 'yes:1')
-vim.api.nvim_set_option('clipboard', 'unnamedplus')
-vim.api.nvim_win_set_option(0, 'wrap', false)
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
-  pattern = '*',
-  callback = function()
+vim.api.nvim_set_option_value('signcolumn', 'yes:1', {})
+vim.api.nvim_set_option_value('clipboard', 'unnamedplus', {})
+vim.api.nvim_set_option_value('wrap', false, {})
+-- vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
+--   pattern = '*',
+--   callback = function()
     -- 10.3.1 節で書いたコードをここに移動する
-    vim.api.nvim_buf_set_option(0, 'tabstop', 2)
-    vim.api.nvim_buf_set_option(0, 'shiftwidth', 0)
-    vim.api.nvim_buf_set_option(0, 'expandtab', true)
-  end,
-})
+    vim.api.nvim_set_option_value('tabstop', 2, {})
+    vim.api.nvim_set_option_value('shiftwidth', 2, {})
+    vim.api.nvim_set_option_value('expandtab', true, {})
+--   end,
+-- })
 vim.api.nvim_set_var('loaded_netrw', 1)
 vim.api.nvim_set_var('loaded_netrwPlugin', 1)
 -- キーマッピング
