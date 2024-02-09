@@ -15,10 +15,10 @@ require('telescope').setup {
       ignore_patterns = { "*.git/*", "*/tmp/*" },
       disable_devicons = false,
       workspaces = {
-        ["conf"]    = "/home/takuyamuk/.config",
-        ["data"]    = "/home/takuyamuk/.local/share",
-        ["project"] = "/home/takuyamuk/projects",
-        ["wiki"]    = "/home/takuyamuk/wiki"
+        ["conf"]    = "/home/muta/.config",
+        ["data"]    = "/home/muta/.local/share",
+        ["project"] = "/home/muta/projects",
+        ["wiki"]    = "/home/muta/wiki"
       }
     }
   },

@@ -25,12 +25,18 @@ require('lazy').setup({
     },
   },
   {
-    "rebelot/kanagawa.nvim",
+    "catppuccin/nvim", name = 'catppuccin', priority = 1000,
     config = function()
-      require 'plugins/kanagawa'
+      require 'plugins.catppuccin'
     end,
-    -- event = "BufEnter",
   },
+  -- {
+  --   "rebelot/kanagawa.nvim",
+  --   config = function()
+  --     require 'plugins/kanagawa'
+  --   end,
+  --   -- event = "BufEnter",
+  -- },
   {
     "HiPhish/Rainbow-delimiters.nvim",
     dependencies = 'nvim-treesitter/nvim-treesitter',
@@ -97,9 +103,6 @@ require('lazy').setup({
   {
     "nvim-telescope/telescope-frecency.nvim",
     keys = {'<leader><leader>', mode = 'n'},
-    config = function()
-      require = "plugins/telescope-frecency"
-    end,
     dependencies = "nvim-telescope/telescope.nvim",
   },
   {
@@ -108,29 +111,26 @@ require('lazy').setup({
     dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
     keys = { { '<leader>ex', mode = 'n' } },
   },
-  {
-    "nvim-telescope/telescope-file-browser.nvim",
-    dependencies = {
-      "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons",
-    },
-    lazy = true,
-    key = { "<space>fb", mode = "n" },
-    config = function() require 'plugins.telescope-file-browser' end,
-  },
+  -- {
+  --   "nvim-telescope/telescope-file-browser.nvim",
+  --   dependencies = {
+  --     "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons",
+  --   },
+  --   lazy = true,
+  --   key = { "<space>fb", mode = "n" },
+  --   config = function() require 'plugins.telescope-file-browser' end,
+  -- },
   {
     'nvim-tree/nvim-tree.lua',
     dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
     keys = { { '<leader>ex', mode = 'n' } },
   },
   {
-    'neovim/nvim-lspconfig',
-    -- event = "BufEnter",
-    config = function() require 'plugins.nvim-lspconfig' end,
-  },
-  {
     'williamboman/mason.nvim',
     dependencies = {
-      'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lsp',
+      'williamboman/mason-lspconfig.nvim',
+      {'neovim/nvim-lspconfig', config = function() require 'plugins.nvim-lspconfig' end},
     },
     -- lazy = true,
     -- cmd = {
@@ -144,6 +144,11 @@ require('lazy').setup({
     config = function() require 'plugins.mason' end,
   },
   {
+    'neovim/nvim-lspconfig',
+    -- event = "BufEnter",
+    config = function() require 'plugins.nvim-lspconfig' end,
+  },
+  {
     'SmiteshP/nvim-navic',
     lazy = true,
     cmd = "InsertEnter",
@@ -155,11 +160,11 @@ require('lazy').setup({
     keys = {"<leader>nb", mode = "n"},
     config = function() require 'plugins.nvim-navbuddy' end,
     dependencies = {
-      'neovim/nvim-lspconfig', 'SmiteshP/nvim-navic', 'MunifTanjim/nui.nvim', 'numToStr/Comment.nvim',
+      'neovim/nvim-lspconfig',
+      'SmiteshP/nvim-navic', 'MunifTanjim/nui.nvim', 'numToStr/Comment.nvim',
       'nvim-telescope/telescope.nvim',
     },
   },
-  { 'williamboman/mason-lspconfig.nvim' },
   {
     'numToStr/Comment.nvim',
     event = "BufWinEnter",
@@ -173,22 +178,25 @@ require('lazy').setup({
     config = function() require 'plugins.nvim-cmp' end,
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
+      dependencies =
       {
-        'L3MON4D3/LuaSnip',
-        vesion = 'v2.*',
-        run = 'make install_jsregexp',
-        config = function() require 'plugins.luasnip' end,
-        dependencies = { 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets' }
+        {
+          'L3MON4D3/LuaSnip',
+          vesion = 'v2.*',
+          build = 'make install_jsregexp',
+          config = function() require 'plugins.luasnip' end,
+          dependencies = { 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets' }
+        },
+        {
+          'zbirenbaum/copilot-cmp',
+          dependencies = 'copilot.lua',
+          config = function() require('copilot_cmp').setup() end,
+          lazy = true,
+        },
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
       },
-      {
-        'zbirenbaum/copilot-cmp',
-        dependencies = { 'copilot.lua' },
-        config = function() require('copilot_cmp').setup() end,
-        lazy = true,
-      },
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-    },
+    }
   },
   {
     "zbirenbaum/copilot.lua",
@@ -208,6 +216,10 @@ require('lazy').setup({
     independencies = 'nvim-tree/nvim-web-devicons',
   },
   {
+    'dccsillag/magma-nvim',
+    build = ':UpdateRemotePlugins'
+  },
+  {
     'mfussenegger/nvim-dap', config = function() require 'plugins.nvim-dap' end,
   },
   {
@@ -216,9 +228,9 @@ require('lazy').setup({
     event = "BufEnter",
     -- keys = {'<leader>d', '<F5>', mode = 'n'},
     dependencies = {{
-        "folke/neodev.nvim", opts = {}, 
+        "folke/neodev.nvim", opts = {},
         config = function() require 'plugins/neodev' end,
-      }, 
+      },
       "nvim-dap",
     },
   },
@@ -238,12 +250,14 @@ require('lazy').setup({
   },
   {
     'j-hui/fidget.nvim',
+    opts = {},
     config = function() require 'plugins.fidget' end,
   },
   {
     'rcarriga/nvim-notify',
     ops = {},
     config = function() require 'plugins.nvim-notify' end,
+    dependencies = 'rebelot/kanagawa.nvim',
   },
   {
     'nvimtools/none-ls.nvim',
