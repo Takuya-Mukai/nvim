@@ -273,6 +273,10 @@ require('lazy').setup({
       handlers = {}
     },
   },
+  {
+    'echasnovski/mini.nvim',
+      config = function() require 'plugins.mini' end,
+  },
 })
 
 -- その他の設定
