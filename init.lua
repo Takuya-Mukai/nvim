@@ -277,6 +277,10 @@ require('lazy').setup({
     'echasnovski/mini.nvim',
       config = function() require 'plugins.mini' end,
   },
+  {
+    'akinsho/toggleterm.nvim', version = "*",
+    config = function() require 'plugins.toggleterm' end,
+  }
 })
 
 -- その他の設定
@@ -303,6 +307,7 @@ vim.o.helplang = "ja,en"
 vim.api.nvim_set_option_value("signcolumn", "yes:1", {})
 vim.api.nvim_set_option_value("clipboard", "unnamedplus", {})
 vim.api.nvim_set_option_value("wrap", false, {})
+vim.opt.autochdir = true
 -- vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
 --   pattern = '*',
 --   callback = function()
