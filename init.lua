@@ -119,11 +119,6 @@ require('lazy').setup({
   --   config = function() require 'plugins.telescope-file-browser' end,
   -- },
   {
-    'nvim-tree/nvim-tree.lua',
-    dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
-    keys = { { '<leader>ex', mode = 'n' } },
-  },
-  {
     'williamboman/mason.nvim',
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
@@ -279,6 +274,7 @@ require('lazy').setup({
   },
   {
     'akinsho/toggleterm.nvim', version = "*",
+    keys = {"<leader>g", "<leader>tt"},
     config = function() require 'plugins.toggleterm' end,
   }
 })
@@ -307,7 +303,6 @@ vim.o.helplang = "ja,en"
 vim.api.nvim_set_option_value("signcolumn", "yes:1", {})
 vim.api.nvim_set_option_value("clipboard", "unnamedplus", {})
 vim.api.nvim_set_option_value("wrap", false, {})
-vim.opt.autochdir = true
 -- vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
 --   pattern = '*',
 --   callback = function()
