@@ -15,6 +15,6 @@ vim.api.nvim_create_user_command('Ex', function() vim.cmd.NvimTreeToggle() end, 
   vim.keymap.set('n', '<leader>ex', vim.cmd.NvimTreeToggle)
 -- pass to setup along with your other options
 require("nvim-tree").setup {
-  on_attach = require('plugins.nvim-tree-actions').on_attach,
+  on_attach = require('plugins-config.nvim-tree-actions').on_attach,
 }
 
