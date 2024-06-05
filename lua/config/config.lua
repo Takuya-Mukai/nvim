@@ -5,9 +5,10 @@ vim.cmd("syntax enable")
 vim.bo.tabstop = 2
 vim.bo.shiftwidth = 2
 vim.bo.expandtab = true
-vim.o.pumblend = 20
+vim.opt.pumblend = 20
+vim.opt.winblend = 0
 vim.opt.showmode = false
-vim.wo.cursorline = true
+vim.wo.cursorline = false
 vim.o.clipboard = "unnamedplus"
 vim.wo.relativenumber = true
 vim.o.pumblend = 30

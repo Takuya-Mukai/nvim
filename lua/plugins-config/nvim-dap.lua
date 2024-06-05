@@ -51,5 +51,6 @@ dap.configurations = {
       -- trueだとバイナリのデバッグになっちゃう(なんで?)
       stopOnEntry = false
     }
-  }
+  },
 }
+dap.configurations.cpp = dap.configurations.c

@@ -12,24 +12,17 @@ return {
       require 'plugins-config.catppuccin'
     end,
   },
-  -- {
-  --   "rebelot/kanagawa.nvim",
-  --   config = function()
-  --     require 'plugins-config/kanagawa'
-  --   end,
-  --   -- event = "BufEnter",
-  -- },
   {
     "HiPhish/Rainbow-delimiters.nvim",
     dependencies = 'nvim-treesitter/nvim-treesitter',
   },
-  -- {
-  --   'kevinhwang91/nvim-hlslens',
-  --   keys = {"/", mod = "n"},
-  --   config = function()
-  --     require 'plugins-config/nvim-hlslens'
-  --   end,
-  -- },
+  {
+    'kevinhwang91/nvim-hlslens',
+    keys = {"/", mod = "n"},
+    config = function()
+      require 'plugins-config/nvim-hlslens'
+    end,
+  },
   {
     'petertriho/nvim-scrollbar',
     config = function ()
@@ -159,7 +152,7 @@ return {
       {
         {
           'L3MON4D3/LuaSnip',
-          vesion = 'v2.*',
+          version = 'v2.*',
           build = 'make install_jsregexp',
           config = function() require 'plugins-config.luasnip' end,
           dependencies = { 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets' }
@@ -190,7 +183,7 @@ return {
     lazy = true,
     keys = {"<leader>xx", "<leader>xw", "<leader>xd", "<leader>xq", "<leader>xl", mode = "n"},
     config = function() require 'plugins-config.trouble' end,
-    independencies = 'nvim-tree/nvim-web-devicons',
+    dependencies = 'nvim-tree/nvim-web-devicons',
   },
   -- spec = {
   --   {import = 'jupyter'},
@@ -288,11 +281,13 @@ return {
     config = function() require 'plugins-config.dapui' end,
     event = "BufEnter",
     -- keys = {'<leader>d', '<F5>', mode = 'n'},
-    dependencies = {{
+    dependencies = {
+      {
         "folke/neodev.nvim", opts = {},
         config = function() require 'plugins-config/neodev' end,
       },
       "nvim-dap",
+      "nvim-neotest/nvim-nio",
     },
   },
   {
@@ -316,7 +311,7 @@ return {
   },
   {
     'rcarriga/nvim-notify',
-    ops = {},
+    opts = {},
     config = function() require 'plugins-config.nvim-notify' end,
     dependencies = 'rebelot/kanagawa.nvim',
   },
