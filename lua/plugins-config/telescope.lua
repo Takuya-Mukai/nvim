@@ -24,8 +24,8 @@ require('telescope').setup {
   },
 }
 require('telescope').load_extension('fzf')
-vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
-local themes = require 'catppuccin'
+-- vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
+local themes = require 'telescope.themes'
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files)

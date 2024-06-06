@@ -5,13 +5,12 @@ vim.cmd("syntax enable")
 vim.bo.tabstop = 2
 vim.bo.shiftwidth = 2
 vim.bo.expandtab = true
-vim.opt.pumblend = 20
+vim.opt.pumblend = 0
 vim.opt.winblend = 0
 vim.opt.showmode = false
 vim.wo.cursorline = false
 vim.o.clipboard = "unnamedplus"
 vim.wo.relativenumber = true
-vim.o.pumblend = 30
 vim.wo.scrolloff = 5
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -39,8 +38,8 @@ vim.api.nvim_set_var("loaded_netrwPlugin", 1)
 vim.api.nvim_set_keymap("i", "jk", "<Esc>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("t", "jk", "<C-\\><C-N>", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("i", "<Tab>", 'pumvisible() ? "<C-n>" : "<Tab>"', { noremap = true, expr = true })
-vim.api.nvim_set_keymap("i", "<S-Tab>", 'pumvisible() ? "<C-p>" : "<S-Tab>"', { noremap = true, expr = true })
+-- vim.api.nvim_set_keymap("i", "<Tab>", 'pumvisible() ? "<C-n>" : "<Tab>"', { noremap = true, expr = true })
+-- vim.api.nvim_set_keymap("i", "<S-Tab>", 'pumvisible() ? "<C-p>" : "<S-Tab>"', { noremap = true, expr = true })
 vim.api.nvim_set_keymap("n", "<leader>vim", ":e ~/.config/nvim/init.lua<CR>", { noremap = true, silent = true })
 -- コマンドモードで "Vim" と入力すると、init.lua を開く
 -- Don't auto-insert line break when selecting completion

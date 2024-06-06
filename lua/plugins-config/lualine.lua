@@ -1,7 +1,6 @@
 require('lualine').setup{
   options = {
 	  globalstatus = true,
-    -- theme = "kanagawa",
     theme = "catppuccin",
       -- ... the rest of your lualine config 	
     component_separators = {left = '', right = ''},

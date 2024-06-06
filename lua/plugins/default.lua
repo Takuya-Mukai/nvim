@@ -15,6 +15,9 @@ return {
   {
     "HiPhish/Rainbow-delimiters.nvim",
     dependencies = 'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require 'plugins-config.rainbow-delimiters'
+    end,
   },
   {
     'kevinhwang91/nvim-hlslens',
@@ -39,19 +42,25 @@ return {
     event = "BufEnter",
   },
   {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    opts = {},
-    config = function ()
-      require 'plugins-config/indent-blankline'
+    "shellRaining/hlchunk.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require 'plugins-config.hlchunk'
     end,
-    dependencies = 'nvim-treesitter/nvim-treesitter',
-    event = "BufWinEnter",
   },
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   main = "ibl",
+  --   opts = {},
+  --   config = function ()
+  --     require 'plugins-config/indent-blankline'
+  --   end,
+  --   dependencies = 'nvim-treesitter/nvim-treesitter',
+  --   event = "BufEnter",
+  -- },
   {
     "nvim-treesitter/nvim-treesitter",
     config = function() require 'plugins-config.nvim-treesitter' end,
-    event = "BufWinEnter",
     build = ":TSUpdate",
   },
   {
@@ -62,14 +71,24 @@ return {
     dependencies = {
       'nvim-tree/nvim-web-devicons', lazy = true
     },
-    event = "BufWinEnter",
+    event = "BufEnter",
   },
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x', -- or... tag = '0.1.1'
     dependencies = {
       'nvim-tree/nvim-web-devicons', 'nvim-lua/plenary.nvim',
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+      {
+        'nvim-telescope/telescope-fzf-native.nvim', build = 'make'
+      },
+      {
+        'prochri/telescope-all-recent.nvim',
+        opts = {},
+        dependencies = {
+          'kkharji/sqlite.lua',
+          'nvim-telescope/telescope.nvim',
+        },
+      },
     },
     lazy = true,
     keys = {'<leader>ff', mode = 'n'},
@@ -84,7 +103,7 @@ return {
     'nvim-tree/nvim-tree.lua',
     config = function() require 'plugins-config.nvim-tree' end,
     dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
-    keys = { { '<leader>ex', mode = 'n' } },
+    -- keys = { { '<leader>ex', mode = 'n' } },
   },
   -- {
   --   "nvim-telescope/telescope-file-browser.nvim",
@@ -103,14 +122,14 @@ return {
       {'neovim/nvim-lspconfig', config = function() require 'plugins-config.nvim-lspconfig' end},
     },
     -- lazy = true,
-    -- cmd = {
-    --   "Mason",
-    --   "MasonInstall",
-    --   "MasonUninstall",
-    --   "MasonUninstallAll",
-    --   "MasonLog",
-    --   "MasonUpdate",
-    -- },
+    cmd = {
+      "Mason",
+      "MasonInstall",
+      "MasonUninstall",
+      "MasonUninstallAll",
+      "MasonLog",
+      "MasonUpdate",
+    },
     config = function() require 'plugins-config.mason' end,
   },
   {
@@ -135,16 +154,16 @@ return {
       'nvim-telescope/telescope.nvim',
     },
   },
-  {
-    'numToStr/Comment.nvim',
-    event = "BufWinEnter",
-    config = function()
-      require 'plugins-config.comment'
-    end,
-  },
+  -- {
+  --   'numToStr/Comment.nvim',
+  --   event = "BufWinEnter",
+  --   config = function()
+  --     require 'plugins-config.comment'
+  --   end,
+  -- },
   {
     "hrsh7th/nvim-cmp",
-    -- event = "InsertEnter",
+    event = "InsertEnter",
     config = function() require 'plugins-config.nvim-cmp' end,
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
@@ -171,7 +190,7 @@ return {
   {
     "zbirenbaum/copilot.lua",
     lazy = true,
-    event = "InsertEnter",
+    cmd = "Copilot",
     config = function()
       require("copilot").setup({
         copilot_node_command = 'node'
@@ -274,13 +293,14 @@ return {
   -- --   end,
   -- -- },
   {
-    'mfussenegger/nvim-dap', config = function() require 'plugins-config.nvim-dap' end,
+    'mfussenegger/nvim-dap',
+    config = function() require 'plugins-config.nvim-dap' end,
+    lazy = true,
   },
   {
     'rcarriga/nvim-dap-ui',
     config = function() require 'plugins-config.dapui' end,
-    event = "BufEnter",
-    -- keys = {'<leader>d', '<F5>', mode = 'n'},
+    keys = {'<leader>d', '<F5>', mode = 'n'},
     dependencies = {
       {
         "folke/neodev.nvim", opts = {},
@@ -307,13 +327,14 @@ return {
   {
     'j-hui/fidget.nvim',
     opts = {},
+    event = "VimEnter",
     config = function() require 'plugins-config.fidget' end,
   },
   {
     'rcarriga/nvim-notify',
     opts = {},
     config = function() require 'plugins-config.nvim-notify' end,
-    dependencies = 'rebelot/kanagawa.nvim',
+    event = "BufEnter",
   },
   {
     'nvimtools/none-ls.nvim',

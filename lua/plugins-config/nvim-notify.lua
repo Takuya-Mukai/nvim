@@ -1,4 +1,4 @@
-local notify = require 'notify'
+local notify = require('notify')
 
 notify.setup()
 
