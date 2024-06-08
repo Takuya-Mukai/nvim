@@ -146,7 +146,7 @@ return {
   },
   {
     "SmiteshP/nvim-navbuddy",
-    keys = {"<leader>nb", mode = "n"},
+    keys = {"<leader>n", mode = "n"},
     config = function() require 'plugins-config.nvim-navbuddy' end,
     dependencies = {
       'neovim/nvim-lspconfig',
@@ -318,10 +318,7 @@ return {
   },
   {
     'folke/which-key.nvim',
-    lazy = true,
-    cmd = {
-      "WhichKey",
-    },
+    config = function() require 'plugins-config/which-key' end,
     opts = {},
   },
   {

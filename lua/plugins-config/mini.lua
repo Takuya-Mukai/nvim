@@ -13,6 +13,4 @@ hipatterns.setup({
     hex_color = hipatterns.gen_highlighter.hex_color(),
   },
 })
-require('mini.jump').setup()
-require('mini.pairs').setup()
 require('mini.surround').setup()
