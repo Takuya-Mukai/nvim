@@ -9,7 +9,6 @@ vim.opt.pumblend = 0
 vim.opt.winblend = 0
 vim.opt.showmode = false
 vim.wo.cursorline = false
-vim.o.clipboard = "unnamedplus"
 vim.wo.relativenumber = true
 vim.wo.scrolloff = 5
 vim.o.ignorecase = true

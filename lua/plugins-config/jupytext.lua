@@ -1,6 +1,7 @@
 require('jupytext').setup({
   -- Jupytext configuration options
-  format = 'py',
+  style = "markdown",
+  output_extension = "md",
+  force_ft = "markdown",
   sync = true,
 })
-

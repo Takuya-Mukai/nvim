@@ -1,25 +1,29 @@
 return {
   -- jupytext change(ipynb -> py)
-  {
-    "GCBallesteros/jupytext.nvim",
-    config = function()
-      require 'plugins-config.jupytext'
-    end,
-    ft = "ipynb",
-    lazy = true,
-  },
   --  cell run
   {
     "GCBallesteros/NotebookNavigator.nvim",
-    event = "VeryLazy",
     config = function()
       require 'plugins-config.notebook-navigator'
     end,
-    ft = "python",
+    ft = 'json',
     dependencies = {
-      "GCBallesteros/jupytext.nvim",
-      "echasnovski/mini.comment",
+      {
+        "GCBallesteros/jupytext.nvim",
+        config = function()
+          require 'plugins-config.jupytext'
+        end,
+        lazy = true,
+      },
+      {
+        "echasnovski/mini.comment",
+        event = 'VeryLazy',
+      },
       "anuvyklack/hydra.nvim",
+      {
+        'willothy/wezterm.nvim',
+        config=true,
+      },
       {
         "benlubas/molten-nvim",
         version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
@@ -35,44 +39,51 @@ return {
         end,
         dependencies = {
           {
-            "3rd/image.nvim",
+            'vhyrro/luarocks.nvim',
+            priority = 1001,
             opts = {
-              backend = "kitty", -- whatever backend you would like to use
+              rocks = {'magick'},
+            },
+          },
+          {
+            "3rd/image.nvim",
+            dependencies={'luarocks.nvim'},
+            opts = {
+              backend = "kitty", -- whatever backend you  like to use
               max_width = 100,
               max_height = 12,
               max_height_window_percentage = math.huge,
               max_width_window_percentage = math.huge,
               window_overlap_clear_enabled = true, -- toggles images when windows are overlapped
               window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
-            },
+            }
           },
         },
       },
-    },
-  },
-  {
-    "echasnovski/mini.hipatterns",
-    event = "VeryLazy",
-    dependencies = { "GCBallesteros/NotebookNavigator.nvim" },
-    config = function()
-      require 'plugins-config.mini-hipatterns'
-    end,
-    opts = function()
-      local nn = require "notebook-navigator"
-
-      local opts = { highlighters = { cells = nn.minihipatterns_spec } }
-      return opts
-    end,
+    }
   },
   {
     "echasnovski/mini.ai",
     event = "VeryLazy",
-    dependencies = { "GCBallesteros/NotebookNavigator.nvim" },
+    dependencies = { "/NotebookNavigator.nvim" },
     opts = function()
       local nn = require "notebook-navigator"
 
       local opts = { custom_textobjects = { h = nn.miniai_spec } }
       return opts
     end,
+  },
+  {
+    {
+      'quarto-dev/quarto-nvim',
+      config = function()
+        require 'plugins-config.quarto-nvim'
+      end,
+      ft={'quarto', 'markdown'},
+    },
+    'jmbuhr/otter.nvim',
+    'hrsh7th/nvim-cmp',
+    'neovim/nvim-lspconfig',
+    'nvim-treesitter/nvim-treesitter'
   },
 }

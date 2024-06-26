@@ -81,18 +81,18 @@ return {
       {
         'nvim-telescope/telescope-fzf-native.nvim', build = 'make'
       },
-      {
-        'prochri/telescope-all-recent.nvim',
-        opts = {},
-        dependencies = {
-          'kkharji/sqlite.lua',
-          'nvim-telescope/telescope.nvim',
-        },
-      },
     },
     lazy = true,
     keys = {'<leader>ff', mode = 'n'},
     config = function() require 'plugins-config.telescope' end,
+  },
+  {
+    'prochri/telescope-all-recent.nvim',
+    opts = {},
+    dependencies = {
+      'kkharji/sqlite.lua',
+      'nvim-telescope/telescope.nvim',
+    },
   },
   {
     "nvim-telescope/telescope-frecency.nvim",
@@ -100,11 +100,18 @@ return {
     dependencies = "nvim-telescope/telescope.nvim",
   },
   {
-    'nvim-tree/nvim-tree.lua',
-    config = function() require 'plugins-config.nvim-tree' end,
-    dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
-    -- keys = { { '<leader>ex', mode = 'n' } },
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function() require 'plugins-config.oil' end,
   },
+  -- {
+  --   'nvim-tree/nvim-tree.lua',
+  --   config = function() require 'plugins-config.nvim-tree' end,
+  --   dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' },
+  --   -- keys = { { '<leader>ex', mode = 'n' } },
+  -- },
   -- {
   --   "nvim-telescope/telescope-file-browser.nvim",
   --   dependencies = {
